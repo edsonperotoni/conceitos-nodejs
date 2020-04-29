@@ -68,7 +68,17 @@ app.put("/repositories/:id", (request, response) => {
 });
 
 app.delete("/repositories/:id", (request, response) => {
-  // TODO
+  const {id} = request.params;
+  const repositorieIndex = repositories.findIndex(repository=>repository.id === id);
+  
+  repositories.splice(repositorieIndex,1);
+
+  return  response.status(200).json(
+    {
+      id,
+      message:"repository deleted"
+    }
+  );
 });
 
 app.post("/repositories/:id/like", (request, response) => {
