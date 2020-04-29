@@ -52,15 +52,9 @@ app.put("/repositories/:id", (request, response) => {
   const {title,url,techs} = request.body;
   const repositorieIndex = repositories.findIndex(repository=>repository.id === id);
   
-  const repository = {
-    id,
-    title,
-    url,
-    techs,
-    likes: repositories[repositorieIndex].likes 
-  }
-
-  repositories[repositorieIndex] =  repository;
+  repositories[repositorieIndex].url = url;
+  repositories[repositorieIndex].title = title;
+  repositories[repositorieIndex].techs = techs;
   
   return response.json(
     repositories[repositorieIndex]
@@ -73,12 +67,7 @@ app.delete("/repositories/:id", (request, response) => {
   
   repositories.splice(repositorieIndex,1);
 
-  return  response.status(200).json(
-    {
-      id,
-      message:"repository deleted"
-    }
-  );
+  return  response.status(204).send( );
 });
 
 app.post("/repositories/:id/like", (request, response) => {
